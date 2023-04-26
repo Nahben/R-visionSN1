@@ -46,6 +46,16 @@ class Personne {
         $this->isSmoker = $isSmoker;
     }
 
+    public static function MostAged($tableau){
+        $levieux = $tableau[0];
+        for ($i=0; $i < $tableau.count() ; $i++) { 
+            if($tableau[$i]->getAge() > $levieux->getAge()){
+                $levieux = $tableau[$i];
+            }
+        }
+        return $levieux;
+    }
+
 }
 $unePersonne = new Personne("DELANNOY", "Arthur", 19, "Masculin", false);
 $uneAutrePersonne = new Personne("DELANNOY", "Arthur", 19, "Masculin");
@@ -59,5 +69,4 @@ $unePersonne->setAge(19, 2);
 var_dump($unePersonne);
 var_dump($uneAutrePersonne);
 echo($unePersonne->getNom());
-echo($unePersonne->isAdult(18));
 var_dump(Personne::isAdult(21, 18));
