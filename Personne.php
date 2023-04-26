@@ -6,7 +6,7 @@ class Personne {
     private $genre;
     private $isSmoker;
 
-    public function __construct($nom, $prenom, $age, $genre, $smoker=15){
+    public function __construct($nom, $prenom, $age, $genre, $smoker=false){
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->age = $age;
@@ -23,13 +23,8 @@ class Personne {
         }
     }
 
-    public function isAdult($majorite){
-        if($this->age >= $majorite){
-            return "Il est majeur";
-        }
-        else{
-            return "Il est mineur";
-        }
+    public static function isAdult($majorite, $age){
+        return $age >= $majorite;
     }
 
     public function setNom($nom){
@@ -50,6 +45,7 @@ class Personne {
     public function setIsSmocker($isSmoker){
         $this->isSmoker = $isSmoker;
     }
+
 }
 $unePersonne = new Personne("DELANNOY", "Arthur", 19, "Masculin", false);
 $uneAutrePersonne = new Personne("DELANNOY", "Arthur", 19, "Masculin");
@@ -64,3 +60,4 @@ var_dump($unePersonne);
 var_dump($uneAutrePersonne);
 echo($unePersonne->getNom());
 echo($unePersonne->isAdult(18));
+var_dump(Personne::isAdult(21, 18));
