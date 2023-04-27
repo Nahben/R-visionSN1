@@ -5,6 +5,6 @@ class Db{
     private static $user = "root";
     private static $psw = "";
     public static function Connection(){
-        return $connexion = new PDO('mysql:host='+Db::$host+';dbname='+Db::$dbname+';charset=utf8', Db::$user, Db::$psw);
+        return $connexion = new PDO('mysql:host='.Db::$host.';dbname='.Db::$dbname.';charset=utf8', Db::$user, Db::$psw);
     }
 }
