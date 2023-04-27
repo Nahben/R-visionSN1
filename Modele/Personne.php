@@ -32,7 +32,7 @@ class Personne {
     public function insertIntoDB(){
         $connexion = Db::Connection();
         // Préparation de la requête d'insertion
-        $requete = $connexion->prepare('INSERT INTO Personne (IdentifiantPersonne, Nom, Prenom, Email, DateNaissance) VALUES (:identifiantCircuit, :nom, :prenom, :email, :dateNaissance)');
+        $requete = $connexion->prepare('INSERT INTO Personne (Id_Personne, Nom, Email, Prenom, DateNaissance) VALUES (:identifiantPersonne, :nom, :email, :prenom, :dateNaissance)');
 
         // Liaison des valeurs aux paramètres de la requête
         $requete->bindParam(':identifiantPersonne', $this->identifiantPersonne);

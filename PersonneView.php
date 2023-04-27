@@ -1,6 +1,6 @@
 <?php
    // Inclusion du fichier contenant la définition de la classe Circuit
-   require_once('Personne.php');
+   require_once('Modele/Personne.php');
 
    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        // Récupération des valeurs du formulaire
@@ -29,6 +29,9 @@
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <body>
+    <?php
+        include('header.php');
+    ?>
    <div class="container">
        <h1>Ajout d'un circuit</h1>
        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">

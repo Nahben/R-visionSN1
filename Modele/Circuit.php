@@ -126,6 +126,17 @@ class Circuit {
         // Fermeture de la connexion à la base de données
         $connexion = null;
     }
+    public static function getAllCircuits(){
+        $connexion = Db::Connection();
+        $requete = "SELECT * FROM Circuit";
+        $resultat = $connexion->query($requete);
+        $listeCircuits = array();
+        while ($donnees = $resultat->fetch()) {
+            $circuit = new Circuit($donnees['IdentifiantCircuit'], $donnees['Descriptif'], $donnees['VilleDepart'], $donnees['PaysDepart'], $donnees['VilleArrivee'], $donnees['PaysArrivee'], $donnees['DateDepart'], $donnees['NbrPlaceDisponible'], $donnees['Duree'], $donnees['PrixInscription']);
+            $listeCircuits[] = $circuit;
+            }
+        return $listeCircuits;
+    }
 }
 
 ?>
