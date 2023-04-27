@@ -1,32 +1,22 @@
 <?php
+include 'db.php';
 class Personne {
+    private $identifiantPersonne;
     private $nom;
     private $prenom;
-    private $age;
-    private $genre;
-    private $isSmoker;
+    private $email;
+    private $dateNaissance;
 
-    public function __construct($nom, $prenom, $age, $genre, $smoker=false){
+    public function __construct($identifiantPersonne, $nom, $prenom, $email, $dateNaissance){
+        $this->identifiantPersonne = $identifiantPersonne;
         $this->nom = $nom;
         $this->prenom = $prenom;
-        $this->age = $age;
-        $this->genre = $genre;
-        $this->isSmoker = $smoker;
+        $this->email = $email;
+        $this->dateNaissance = $dateNaissance;
     }
-
-    public function smoker(){
-        if($this->isSmoker){
-            return "Il fume";
-        }
-        else{
-            return "Il ne fume pas";
-        }
+    public function getIdentifiantPersonne(){
+        return $this->identifiantPersonne;
     }
-
-    public static function isAdult($majorite, $age){
-        return $age >= $majorite;
-    }
-
     public function setNom($nom){
         $this->nom = $nom;
     }
@@ -36,37 +26,25 @@ class Personne {
     public function setPrenom($prenom){
         $this->prenom = $prenom;
     }
-    public function setAge($age, $supplement=0){
-        $this->age = $age + $supplement;
+    public function getPrenom(){
+        return $this->prenom;
     }
-    public function setGenre($genre){
-        $this->genre = $genre;
-    }
-    public function setIsSmocker($isSmoker){
-        $this->isSmoker = $isSmoker;
-    }
+    public function insertIntoDB(){
+        $connexion = Db::Connection();
+        // Préparation de la requête d'insertion
+        $requete = $connexion->prepare('INSERT INTO Personne (IdentifiantPersonne, Nom, Prenom, Email, DateNaissance) VALUES (:identifiantCircuit, :nom, :prenom, :email, :dateNaissance)');
 
-    public static function MostAged($tableau){
-        $levieux = $tableau[0];
-        for ($i=0; $i < $tableau.count() ; $i++) { 
-            if($tableau[$i]->getAge() > $levieux->getAge()){
-                $levieux = $tableau[$i];
-            }
-        }
-        return $levieux;
-    }
+        // Liaison des valeurs aux paramètres de la requête
+        $requete->bindParam(':identifiantPersonne', $this->identifiantPersonne);
+        $requete->bindParam(':nom', $this->nom);
+        $requete->bindParam(':prenom', $this->prenom);
+        $requete->bindParam(':email', $this->email);
+        $requete->bindParam(':dateNaissance', $this->dateNaissance);
+        var_dump($requete);
+        // Exécution de la requête
+        $requete->execute();
 
+        // Fermeture de la connexion à la base de données
+        $connexion = null;
+    }
 }
-$unePersonne = new Personne("DELANNOY", "Arthur", 19, "Masculin", false);
-$uneAutrePersonne = new Personne("DELANNOY", "Arthur", 19, "Masculin");
-#$unePersonne->setNom("DELANNOY") ;
-#$unePersonne->setPrenom("Arthur");
-var_dump($unePersonne);
-$unePersonne->setAge(19);
-$unePersonne->setAge(19, 2);
-#$unePersonne->setGenre("Masculin");
-#$unePersonne->setIsSmocker(false);
-var_dump($unePersonne);
-var_dump($uneAutrePersonne);
-echo($unePersonne->getNom());
-var_dump(Personne::isAdult(21, 18));
