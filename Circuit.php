@@ -1,4 +1,5 @@
 <?php
+include 'db.php';
 class Circuit {
     private $identifiantCircuit;
     private $descriptif;
@@ -100,6 +101,30 @@ class Circuit {
  
     public function setPrixInscription($prixInscription) {
         $this->prixInscription = $prixInscription;
+    }
+
+    public function insertIntoDB(){
+        $connexion = Db::Connection();
+        // Préparation de la requête d'insertion
+        $requete = $connexion->prepare('INSERT INTO Circuit (IdentifiantCircuit, Descriptif, VilleDepart, PaysDepart, VilleArrivee, PaysArrivee, DateDepart, NbrPlaceDisponible, Duree, PrixInscription) VALUES (:identifiantCircuit, :descriptif, :villeDepart, :paysDepart, :villeArrivee, :paysArrivee, :dateDepart, :nbrPlaceDisponible, :duree, :prixInscription)');
+
+        // Liaison des valeurs aux paramètres de la requête
+        $requete->bindParam(':identifiantCircuit', $this->identifiantCircuit);
+        $requete->bindParam(':descriptif', $this->descriptif);
+        $requete->bindParam(':villeDepart', $this->villeDepart);
+        $requete->bindParam(':paysDepart', $this->paysDepart);
+        $requete->bindParam(':villeArrivee', $this->villeArrivee);
+        $requete->bindParam(':paysArrivee', $this->paysArrivee);
+        $requete->bindParam(':dateDepart', $this->dateDepart);
+        $requete->bindParam(':nbrPlaceDisponible', $this->nbrPlaceDisponible);
+        $requete->bindParam(':duree', $this->duree);
+        $requete->bindParam(':prixInscription', $this->prixInscription);
+
+        // Exécution de la requête
+        $requete->execute();
+
+        // Fermeture de la connexion à la base de données
+        $connexion = null;
     }
 }
 
